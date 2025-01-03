@@ -9,3 +9,7 @@ def integral(f, x, y, N):
 def Mintegral(f, mesh):
     dx = (mesh[-1]-mesh[0])/len(mesh)
     return f(mesh) * dx
+
+def SMintegral(f, mesh):
+    dx = (mesh[-1]-mesh[0])/len(mesh)
+    return sum(f(mesh) * dx)
