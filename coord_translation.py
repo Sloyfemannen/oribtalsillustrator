@@ -6,7 +6,7 @@ def tocart(r, deg):
     y = r * sin(deg)
     return [x, y]
 
-def torot(x, y):
+def topol(x, y):
     r = x**2 + y**2
     deg = atan(y/x)
     return [r, deg]
