@@ -11,3 +11,6 @@ def boolout(P):
         return True
     elif p > P:
         return False
+
+def placefunc(mesh, f):
+    
