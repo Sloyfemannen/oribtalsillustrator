@@ -21,7 +21,7 @@ abs = fspace / sum(fspace)
 
 barlist = [0 for i in mesh]
 
-for j in range(500):
+for j in range(1000):
     for i, e in enumerate(abs):
         test = boolout(e)
         if test == True:
@@ -31,5 +31,5 @@ barlist = np.array(barlist)
 
 plt.plot(mesh, abs)
 plt.show()
-plt.bar(mesh, barlist)
+plt.plot(mesh, barlist)
 plt.show()
