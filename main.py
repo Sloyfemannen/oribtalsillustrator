@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import random as rd
 from coord_translation import topol, tocart
 from functions import Mintegral, SMintegral
+from probability import boolout
 
 L = 10
 
@@ -16,13 +17,8 @@ mesh = np.linspace(0, L, N)
 
 fspace = f(mesh)
 
-integ = fspace / sum(fspace)
+abs = fspace / sum(fspace)
 
-abs = fspace * integ
-
-#abs = abs / abs[0]
 
 plt.plot(mesh, abs)
-#plt.plot(mesh, fspace)
 plt.show()
-
