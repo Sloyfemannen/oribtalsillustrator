@@ -2,15 +2,17 @@ import numpy as np
 import random as rp
 
 def boolout(P):
-    p = str("0.")
-    for i in range(len(str(P)) - 2):
-        p += str(rp.randint(0, 9))
-    print(p)
-    p = float(p)
+    p = rp.uniform(0, 1)
     if p <= P:
         return True
     elif p > P:
         return False
 
-def placefunc(mesh, f):
-    
+def fstring(mesh, f):
+    fmesh = {}
+    for i in mesh:
+        if len(fmesh) == 0:
+            fmesh.update({i: f(i)})
+        else:
+            fmesh.update({i, f(i) + fmesh[-1]})
+    return fmesh

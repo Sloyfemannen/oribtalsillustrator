@@ -8,7 +8,7 @@ from probability import boolout
 
 L = 10
 
-N = 100 * L
+N = 10 * L
 
 def f(x):
     return 1/(x+1)**2
@@ -19,6 +19,17 @@ fspace = f(mesh)
 
 abs = fspace / sum(fspace)
 
+barlist = [0 for i in mesh]
+
+for j in range(500):
+    for i, e in enumerate(abs):
+        test = boolout(e)
+        if test == True:
+            barlist[i] += 1
+
+barlist = np.array(barlist)
 
 plt.plot(mesh, abs)
+plt.show()
+plt.bar(mesh, barlist)
 plt.show()

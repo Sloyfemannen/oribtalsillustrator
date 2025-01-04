@@ -19,3 +19,6 @@ def floatint(n):
     N = str(n)
     N = rg.sub('[.]', '', N)
     return int(N)
+
+def randfloat(a, b):
+    return None
