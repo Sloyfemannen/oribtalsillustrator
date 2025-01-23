@@ -13,23 +13,25 @@ N = 100 * L
 def f(x):
     return np.sin(x)**2 /x
 
-mesh = np.linspace(L/N, L, N)
+xmesh = np.linspace(L/N, L, N)
 
-fspace = f(mesh)
+xmesh, ymesh = np.meshgrid(np.linspace(L/N, L, N), np.linspace(L/N, L, N))
 
-plt.plot(mesh, fspace)
+fspace = f(xmesh)
+
+plt.plot(xmesh, fspace)
 plt.show()
 
 abs = fspace / sum(fspace)
 
-barlist = [0 for i in mesh]
+barlist = [0 for i in xmesh]
 
 for j in range(1000):
     for i, e in enumerate(abs):
         test = boolout(e)
         if test == True:
             barlist[i] += 1
-            plt.plot(mesh[i], rd.uniform(0, 1), 'ro')
+            plt.plot(xmesh[i], rd.uniform(0, 1), 'ro')
 
 plt.show()
 
@@ -39,8 +41,8 @@ barlist = np.array(barlist) / m * max(abs)
 
 sqerr = (barlist-abs)**2
 
-plt.plot(mesh, abs)
-plt.plot(mesh, barlist)
+plt.plot(xmesh, abs)
+plt.plot(xmesh, barlist)
 plt.show()
-plt.plot(mesh, sqerr)
+plt.plot(xmesh, sqerr)
 plt.show()
