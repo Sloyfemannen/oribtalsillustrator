@@ -42,7 +42,7 @@ def PR(r, n, l):
     return np.sqrt((2/(n * a_0))**3 * factorial(n - l + 1) / (2 * n * factorial(n + l))) * np.exp(-r/(n * a_0)) * (2 * r / (n * a_0))**l * L(2*l+1, n-l-1, 2*r/(n * a_0))
 
 def PY(l, m, theta, phi):
-    return np.sqrt(((2 * l + 1)*factorial(l - m))/(4 * np.pi * ))
+    return np.sqrt(((2 * l + 1)*factorial(l - m))/(4 * np.pi * factorial(l + m))) * P(m, l, np.cos(theta)) * np.exp(m * phi * complex(0, 1))
 
 
 def Psi(r, theta, phi, m, l, s):
