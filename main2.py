@@ -10,15 +10,6 @@ X = np.linspace(-1e-10, 1e-10, n)
 Y = X
 Z = X
 
-def toCart():
-    pass
-
-def toPol(x, y, z):
-    r     = np.sqrt(x**2 + y**2 + z**2)
-    theta = np.arccos(z / r)
-    phi   = np.arctan(y / x)
-    return np.array([r, theta, phi])
-
 
 points = []
 for x in X:

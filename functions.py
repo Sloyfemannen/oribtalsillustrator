@@ -12,8 +12,7 @@ def Mintegral(f, mesh):
     return f(mesh  + dx/2) * dx
 
 def SMintegral(f, mesh):
-    dx = (mesh[-1]-mesh[0])/len(mesh)
-    return sum(f(mesh + dx/2) * dx)
+    return sum(Mintegral(f, mesh))
 
 def floatint(n):
     N = str(n)
