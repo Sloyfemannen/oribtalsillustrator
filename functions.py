@@ -3,10 +3,9 @@ import numpy as np
 from numpy.polynomial import Polynomial
 from math import comb, factorial, sqrt
 import regex as rg
-import scipy as sp
 from scipy.special import lpmv
-from scipy.integrate import simpson
-import matplotlib.pyplot as plt
+from coord_translation import topol, tocart
+from probability import boolout
 
 def integral(f, x, y, N):
     m = np.linspace(x, y, N)
@@ -55,5 +54,18 @@ def PY(l, m, theta, phi):
     P = lpmv(m, l, np.cos(theta))
     return norm * P * ex
 
-def Psi(r, theta, phi, m, l, s):
-    return r**2 * abs(R(r, s, l))**2 * abs(PY(l, m, theta, phi))**2
+def PsiSphr(r, theta, phi, m, l, n):
+    return r**2 * abs(R(r, n, l))**2 * abs(PY(l, m, theta, phi))**2
+
+def PsiCart(x, y, z, m, l, n):
+    pol = topol([x, y, z])
+    r = pol[0]
+    theta = pol[1]
+    phi = pol[2]
+    ProbDens = PsiSphr(r, theta, phi, m, l, n)
+    return ProbDens
+
+def StochasticPoint(x, y, z, m, l, n):
+    dice = boolout(PsiCart(x, y, z, m, l, n))
+    if dice == True:
+        return np.array(x, y ,z)
