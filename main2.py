@@ -11,23 +11,20 @@ from mpl_toolkits.mplot3d import Axes3D
 
 %matplotlib widget
 
-np.random.seed(19680801)
-
-n = 40
+n = 75
 a_0 = 5.29177210903e-11
 a_0 = 1
 
-X = np.linspace(-5*a_0, 5*a_0, n)
+X = np.linspace(-15*a_0, 15*a_0, n)
 Y = X
 Z = X
 
 xs, ys, zs = np.meshgrid(X, Y, Z)
 
-n = 1
-l = 0
+n = 2
+l = 1
 m = 0
 
-counter = 0
 
 points = []
 for i in range(1):
@@ -36,8 +33,6 @@ for i in range(1):
             for z in Z:
                 if PsiCart(x, y, z, m, l, n) > rp.uniform(0, 1):
                     points.append(np.array([x, y, z]))
-                if PsiCart(x, y, z, m, l, n) < 1:
-                    counter += 1
 points = np.array(points)
 points = np.transpose(points)
 
@@ -48,11 +43,12 @@ zp = points[2]
 Xs, Ys, Zs = np.meshgrid(xp, yp, zp)
 
 fig = plt.figure()
-#ax = fig.add_subplot(projection='3d')
-ax = Axes3D(fig)
+ax = fig.add_subplot(projection='3d')
 
 
-plot_geeks = ax.scatter(xp, yp, zp)
+ax.scatter(xp, yp, zp)
+
+ax.scatter(0, 0, 0, color="red")
 
 ax.set_xlabel('X Label')
 ax.set_ylabel('Y Label')

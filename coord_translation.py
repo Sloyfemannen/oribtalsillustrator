@@ -21,8 +21,9 @@ def topol(arr):
         phi += pi
     return [r, theta, phi]
 
-
+'''
 liste = [[1, 1, 1], [-1, 1, 1], [1, -1, 1], [-1, -1, 1], [1, 1, -1], [-1, 1, -1], [1, -1, -1], [-1, -1, -1]]
 print("Running test:")
 for a in liste:
     print(a, tocart(topol(a)))#, topol(a))
+'''
