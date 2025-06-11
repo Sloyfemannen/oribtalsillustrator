@@ -27,7 +27,7 @@ m = 0
 
 
 points = []
-for i in range(1):
+for i in range(2):
     for x in X:
         for y in Y:
             for z in Z:
@@ -55,5 +55,3 @@ ax.set_ylabel('Y Label')
 ax.set_zlabel('Z Label')
 
 plt.show()
-
-print(counter)
