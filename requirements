@@ -1,6 +1,6 @@
 numpy
 matplotlib
-random
 regex
 scipy
 ipympl
+pandas

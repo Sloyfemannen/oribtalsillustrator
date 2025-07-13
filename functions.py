@@ -27,9 +27,6 @@ def floatint(n):
 def randfloat(a, b):
     return None
 
-
-########################
-
 a_0 = 1
 
 def L(a, k, x):
