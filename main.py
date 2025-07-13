@@ -1,10 +1,8 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import random as rd
 from coord_translation import topol, tocart
-from functions import Mintegral, SMintegral
-from probability import boolout
+from functions import Mintegral, SMintegral, boolout
 
 L = 20
 

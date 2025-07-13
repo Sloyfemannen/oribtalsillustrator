@@ -8,3 +8,6 @@ class Hatom():
         self.n = n
 
         self.a_0 = 1
+
+    def calcR():
+        self.R = 

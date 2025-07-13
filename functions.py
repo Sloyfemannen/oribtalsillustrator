@@ -4,8 +4,8 @@ from numpy.polynomial import Polynomial
 from math import comb, factorial, sqrt
 import regex as rg
 from scipy.special import lpmv
-from coord_translation import topol, tocart
-from probability import boolout
+from coord_translation import topol
+import random as rd
 
 def integral(f, x, y, N):
     m = np.linspace(x, y, N)
@@ -26,6 +26,13 @@ def floatint(n):
 
 def randfloat(a, b):
     return None
+
+def boolout(P):
+    p = rd.uniform(0, 1)
+    if p <= P:
+        return True
+    elif p > P:
+        return False
 
 a_0 = 1
 
