@@ -5,7 +5,7 @@ from math import comb, factorial, sqrt
 import regex as rg
 from scipy.special import lpmv
 from scipy.integrate import simpson
-from math import cos, sin, arccos, arcsin, arctan, pi
+from math import cos, sin, acos, asin, atan, pi
 import random as rd
 
 
@@ -23,8 +23,8 @@ def topol(arr):
     y = arr[1]
     z = arr[2]
     r     = sqrt(x**2 + y**2 + z**2)
-    theta = arccos(z / r)
-    phi   = arctan(y / x)
+    theta = acos(z / r)
+    phi   = atan(y / x)
     if x < 0:
         phi += pi
     return [r, theta, phi]
@@ -46,9 +46,6 @@ def floatint(n):
     N = str(n)
     N = rg.sub('[.]', '', N)
     return int(N)
-
-def randfloat(a, b):
-    return None
 
 def boolout(P):
     p = rd.uniform(0, 1)
@@ -105,5 +102,4 @@ def bound(n, l):
         r = np.linspace(0, a, 1000)
         P = R(r, n, l)
         integral = simpson(P**2 * r**2, r)
-        print(a, integral)
     return a

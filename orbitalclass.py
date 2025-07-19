@@ -4,11 +4,12 @@ import random as rp
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as ani
+import pandas as pd
 
 
 class orbital():
 
-    def __init__(self, m, l, n):
+    def __init__(self, l, m, n):
         self.m = m
         self.l = l
         self.n = n
@@ -17,31 +18,67 @@ class orbital():
 
         self.bound = bound(self.n, self.l)
 
-        self.points = []
+        density = 5 * self.bound
+
+        self.axis = np.linspace(-self.bound*a_0, self.bound*a_0, density)
+
+        self.points = np.array([["X-coordinate", "Y-coordinate", "Z-coordinate", "Color"]])
         self.calcpoints()
 
-        self.axis = np.linspace(-self.bound*a_0, self.bound*a_0, 75)
+        self.pointsDF = pd.DataFrame(self.points[1:], columns=self.points[0])
 
     def calcpoints(self):
 
         for x in self.axis:
             for y in self.axis:
                 for z in self.axis:
-                    if x > 0 and y > 0:
-                        None
-                    else:
-                        P = PsiCart(x, y, z, self.m, self.l, self.n)
-                        if P > rp.uniform(0, 1):
-                            c = P * 50
-                            self.points.append(np.array([x, y, z, c]))
+                    self.PointGen(x, y, z)
+
+    def randPointDelete(self, n):
+        global point
+        def check():
+            bar = rp.uniform(0, 1)
+            point = np.random.choice(self.points[1:])
+            if PsiCart(point[0], point[1], point[2], self.m, self.l, self.n) >= bar:
+                np.delete(self.points, point)
+                return True
+            else:
+                return False
         
-        self.points = np.transpose(self.points)
+        bol = False
+        while bol == False:
+            bol = check()
     
-    def plotImage(self):
-        xp = self.points[0]
-        yp = self.points[1]
-        zp = self.points[2]
-        cr = self.points[3]
+    def randPointGen(self):
+        global x, y, z
+        P = PsiCart(x, y, z, self.m, self.l, self.n)
+
+        def check():
+            x = np.random.choice(self.axis)
+            y = np.random.choice(self.axis)
+            z = np.random.choice(self.axis)
+            if P > rp.uniform(0, 1):
+                c = P * 50
+                self.points = np.append(self.points, np.array([[x, y, z, c]]), axis=0)
+                return True
+            else:
+                return False
+        
+        bol = False
+        while bol == False:
+            bol == check()
+    
+    def PointGen(self, x, y, z):
+        P = PsiCart(x, y, z, self.m, self.l, self.n)
+        if P > rp.uniform(0, 1):
+            c = P * 50
+            self.points = np.append(self.points, np.array([[x, y, z, c]]), axis=0)
+
+    def plotImage(self, elev=0, azim=45, roll=0):
+        xp = self.pointsDF["X-coordinate"].astype(float)
+        yp = self.pointsDF["Y-coordinate"].astype(float)
+        zp = self.pointsDF["Z-coordinate"].astype(float)
+        cr = self.pointsDF["Color"].astype(float)
 
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
@@ -53,9 +90,57 @@ class orbital():
         ax.set_ylabel('Y axis')
         ax.set_zlabel('Z axis')
 
-        ax.view_init(elev=10, azim=45, roll=0)
+        ax.set_title(f'Orbital: n={self.n}, l={self.l}, m={self.m}')
+    
+        ax.set_xlim([-self.bound*self.a_0, self.bound*self.a_0])
+        ax.set_ylim([-self.bound*self.a_0, self.bound*self.a_0])
+        ax.set_zlim([-self.bound*self.a_0, self.bound*self.a_0])
+
+        ax.view_init(elev=elev, azim=azim, roll=roll)
+        plt.show()
+    
+    def plotImageDissect(self, elev=0, azim=45, roll=0):
+        pointsDissect = self.pointsDF[(self.pointsDF['X-coordinate'].astype(float) < 0) | (self.pointsDF['Y-coordinate'].astype(float) < 0)]
+
+        xp = pointsDissect["X-coordinate"].astype(float)
+        yp = pointsDissect["Y-coordinate"].astype(float)
+        zp = pointsDissect["Z-coordinate"].astype(float)
+        cr = pointsDissect["Color"].astype(float)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(projection='3d')
+
+        ax.scatter(xp, yp, zp, c=cr, cmap='viridis', alpha=1)
+        ax.scatter(0, 0, 0, color="red")
+
+        ax.set_xlabel('X axis')
+        ax.set_ylabel('Y axis')
+        ax.set_zlabel('Z axis')
+
+        ax.set_title(f'Orbital: n={self.n}, l={self.l}, m={self.m}')
+    
+        ax.set_xlim([-self.bound*self.a_0, self.bound*self.a_0])
+        ax.set_ylim([-self.bound*self.a_0, self.bound*self.a_0])
+        ax.set_zlim([-self.bound*self.a_0, self.bound*self.a_0])
+
+        ax.view_init(elev=elev, azim=azim, roll=roll)
         plt.show()
 
+    
+    def plotAnimation(self, interval=100):
+        fig = plt.figure()
+        ax = fig.add_subplot(projection='3d')
+
+        def update(frame):
+            ax.clear()
+            self.plotImage(elev=0, azim=frame, roll=0)
+            return ax,
+
+        ani_func = ani.FuncAnimation(fig, update, frames=np.arange(0, 360, 4), interval=interval)
+        plt.show()
+
+'''
     def plotInteractive(self):
         %matplotlib widget
-        self.plotIm()
+        self.plotImage()
+'''
