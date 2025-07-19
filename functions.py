@@ -4,8 +4,31 @@ from numpy.polynomial import Polynomial
 from math import comb, factorial, sqrt
 import regex as rg
 from scipy.special import lpmv
-from coord_translation import topol
+from scipy.integrate import simpson
+from math import cos, sin, arccos, arcsin, arctan, pi
 import random as rd
+
+
+def tocart(arr):
+    r     = arr[0]
+    theta = arr[1]
+    phi   = arr[2]
+    x = r * sin(theta) * cos(phi)
+    y = r * sin(theta) * sin(phi)
+    z = r * cos(theta)
+    return [x, y, z]
+
+def topol(arr):
+    x = arr[0]
+    y = arr[1]
+    z = arr[2]
+    r     = sqrt(x**2 + y**2 + z**2)
+    theta = arccos(z / r)
+    phi   = arctan(y / x)
+    if x < 0:
+        phi += pi
+    return [r, theta, phi]
+
 
 def integral(f, x, y, N):
     m = np.linspace(x, y, N)
@@ -73,3 +96,14 @@ def StochasticPoint(x, y, z, m, l, n):
     dice = boolout(PsiCart(x, y, z, m, l, n))
     if dice == True:
         return np.array(x, y ,z)
+
+def bound(n, l):
+    integral = 0
+    a = 0
+    while integral < 0.999:
+        a += 1
+        r = np.linspace(0, a, 1000)
+        P = R(r, n, l)
+        integral = simpson(P**2 * r**2, r)
+        print(a, integral)
+    return a

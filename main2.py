@@ -2,7 +2,6 @@ import numpy as np
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
 import scipy as sp
-from coord_translation import *
 from functions import *
 import random as rp
 from mpl_toolkits.mplot3d import Axes3D
@@ -16,8 +15,6 @@ a_0 = 1
 X = np.linspace(-15*a_0, 15*a_0, 75)
 Y = X
 Z = X
-
-xs, ys, zs = np.meshgrid(X, Y, Z)
 
 n = 2
 l = 1
