@@ -10,18 +10,16 @@ import os
 
 class orbital():
 
-    def __init__(self, l, m, n):
+    def __init__(self, n, l, m, id="test1", density=100):
         self.m = m
         self.l = l
         self.n = n
 
         self.a_0 = 1
 
-        self.datafile = f"C:/Users/hzpet/Documents/Uni/kode/oribtalsillustrator/data/n{n}l{l}m{m}.txt"
+        self.datafile = f"data/{id}_n{n}_l{l}_m{m}.txt"
 
         self.bound = bound(self.n, self.l)
-
-        density = 100
 
         self.axis = np.linspace(-self.bound*a_0, self.bound*a_0, density)
 
