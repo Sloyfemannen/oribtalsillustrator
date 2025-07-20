@@ -17,7 +17,7 @@ class orbital():
 
         self.a_0 = 1
 
-        self.datafile = f"data/{id}_n{n}_l{l}_m{m}.txt"
+        self.datafile = f"C:/Users/hzpet/Documents/Uni/kode/oribtalsillustrator/data/n{n}_l{l}_m{m}.txt"
 
         self.bound = bound(self.n, self.l)
 
@@ -38,6 +38,7 @@ class orbital():
             self.calcpoints()
             self.pointsDF = pd.DataFrame(self.points[1:], columns=self.points[0])
             self.pointsDF.to_csv(self.datafile, sep=";", index=False)
+            print(f"Printed data to {self.datafile}")
 
     def calcpoints(self):
         counter = 0
