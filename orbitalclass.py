@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as ani
 import pandas as pd
+import os
 
 
 class orbital():
@@ -16,16 +17,29 @@ class orbital():
 
         self.a_0 = 1
 
+        self.datafile = f"C:/Users/hzpet/Documents/Uni/kode/oribtalsillustrator/data/n{n}l{l}m{m}.txt"
+
         self.bound = bound(self.n, self.l)
 
-        density = 150
+        density = 100
 
         self.axis = np.linspace(-self.bound*a_0, self.bound*a_0, density)
 
         self.points = np.array([["X-coordinate", "Y-coordinate", "Z-coordinate", "Color"]])
-        self.calcpoints()
-
-        self.pointsDF = pd.DataFrame(self.points[1:], columns=self.points[0])
+        
+        self.makepoints()
+    
+    def makepoints(self):
+        if os.path.exists(self.datafile):
+            data = pd.read_csv(self.datafile, sep=";", header=0)
+            print(f"Existing data already found at {self.datafile}")
+            data = data.to_numpy()
+            self.points = np.append(self.points, data, axis=0)
+            self.pointsDF = pd.DataFrame(self.points[1:], columns=self.points[0])
+        else:
+            self.calcpoints()
+            self.pointsDF = pd.DataFrame(self.points[1:], columns=self.points[0])
+            self.pointsDF.to_csv(self.datafile, sep=";", index=False)
 
     def calcpoints(self):
         counter = 0
