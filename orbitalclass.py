@@ -18,7 +18,7 @@ class orbital():
 
         self.bound = bound(self.n, self.l)
 
-        density = 5 * self.bound
+        density = 150
 
         self.axis = np.linspace(-self.bound*a_0, self.bound*a_0, density)
 
@@ -28,11 +28,20 @@ class orbital():
         self.pointsDF = pd.DataFrame(self.points[1:], columns=self.points[0])
 
     def calcpoints(self):
+        counter = 0
+        length = len(self.axis)**3
+        percent = 100 * counter / length
+        bar = 5
 
         for x in self.axis:
             for y in self.axis:
                 for z in self.axis:
                     self.PointGen(x, y, z)
+                    counter += 1
+                    percent = 100 * counter / length
+                    if percent >= bar:
+                        print(f"Progress (n={self.n}, l={self.l}, m={self.m}): {percent} %")
+                        bar += 5
 
     def randPointDelete(self, n):
         global point
@@ -83,8 +92,8 @@ class orbital():
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
 
-        ax.scatter(xp, yp, zp, c=cr, cmap='viridis', alpha=1)
-        ax.scatter(0, 0, 0, color="red")
+        ax.scatter(xp, yp, zp, c=cr, cmap='viridis', alpha=1, edgecolors='black')
+        ax.scatter(0, 0, 0, color="red", edgecolors='black')
 
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
@@ -100,7 +109,7 @@ class orbital():
         plt.show()
     
     def plotImageDissect(self, elev=0, azim=45, roll=0):
-        pointsDissect = self.pointsDF[(self.pointsDF['X-coordinate'].astype(float) < 0) | (self.pointsDF['Y-coordinate'].astype(float) < 0)]
+        pointsDissect = self.pointsDF[(self.pointsDF['X-coordinate'].astype(float) <= 0) | (self.pointsDF['Y-coordinate'].astype(float) <= 0)]
 
         xp = pointsDissect["X-coordinate"].astype(float)
         yp = pointsDissect["Y-coordinate"].astype(float)
@@ -110,8 +119,8 @@ class orbital():
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
 
-        ax.scatter(xp, yp, zp, c=cr, cmap='viridis', alpha=1)
-        ax.scatter(0, 0, 0, color="red")
+        ax.scatter(xp, yp, zp, c=cr, cmap='viridis', alpha=1, edgecolors='black')
+        ax.scatter(0, 0, 0, color="red", edgecolors='black')
 
         ax.set_xlabel('X axis')
         ax.set_ylabel('Y axis')
