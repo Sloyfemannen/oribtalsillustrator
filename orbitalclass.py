@@ -17,7 +17,7 @@ class orbital():
 
         self.a_0 = 1
 
-        self.datafile = f"C:/Users/hzpet/Documents/Uni/kode/oribtalsillustrator/data/n{n}_l{l}_m{m}.txt"
+        self.datafile = f"./data/n{n}_l{l}_m{m}.txt"
 
         self.bound = bound(self.n, self.l)
 
