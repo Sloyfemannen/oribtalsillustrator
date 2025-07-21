@@ -25,7 +25,7 @@ def topol(arr):
     r     = sqrt(x**2 + y**2 + z**2)
     theta = acos(z / r)
     phi   = atan(y / x)
-    if x < 0:
+    if x < 0: 
         phi += pi
     return [r, theta, phi]
 
